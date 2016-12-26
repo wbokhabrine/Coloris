@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello World, p8_Sokoban!</string>
-    <string name="app_name">Sokoban</string>
-    <string name="nv1">Niveau 1</string>
-    <string name="nv2">Niveau 2</string>
-    <string name="nv3">Niveau 3</string>
+
+    <string name="app_name">Coloris</string>
+    <string name="new_game">Nouvelle partie</string>
+    <string name="Continue">Reprendre</string>
+    <string name="best_score">Meilleurs scores</string>
+    <string name="menu_sys">Menu Système</string>
+    <string name="SongOn">Activer le son</string>
+    <string name="SongOff">Désactiver le son</string>
+    <string name="ExitGame">Quitter le jeu</string>
 
 
 </resources>
