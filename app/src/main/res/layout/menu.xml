@@ -4,23 +4,30 @@
     android:layout_height="match_parent">
 
     <Button
-        android:text="@string/nv1"
+        android:text="@string/new_game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button"
-        android:onClick="LoadLevel1" />
+        android:onClick="New_game" />
 
     <Button
-        android:text="@string/nv2"
+        android:text="@string/Continue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button2"
-        android:onClick="LoadLevel2" />
+        android:onClick="Continue" />
 
     <Button
-        android:text="@string/nv3"
+        android:text="@string/best_score"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button3"
-        android:onClick="LoadLevel3" />
+        android:onClick="Best_score" />
+
+    <Button
+        android:text="@string/menu_sys"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button4"
+        android:onClick="System_settings" />
 </LinearLayout>
