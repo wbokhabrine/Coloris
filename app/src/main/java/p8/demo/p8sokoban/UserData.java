@@ -27,6 +27,7 @@ public class UserData {
     private boolean prefCharged=false; // boolean permettant de savoir si les préfèrences ont été chargées
     private boolean gameSaved=false; // boolean pour savoir si une partie a été sauvegardée
     private int timer; // temps de la partie en seconde
+    private int score;
     private int[][] gameGrid=new int[8][8]; // grille du jeu (tableau 8x8 de int)
     private int[][] tripletTab=new int [3][3]; // tableau de 3 triplets (1 triplet c'est une pièce de 3 cases)
     private Context context;
@@ -345,6 +346,9 @@ public class UserData {
             if( (line = inputReader.readLine()) != null){
                 timer=Integer.parseInt(line);
             }
+            if( (line = inputReader.readLine()) != null){
+                score=Integer.parseInt(line);
+            }
             for(int index=0;index<tripletTab.length;index++){
                 if( (line = inputReader.readLine()) != null) {
                     int x = 0;
@@ -409,6 +413,7 @@ public class UserData {
         try {
             outputWriter = new BufferedWriter(new OutputStreamWriter(context.openFileOutput("gameData.txt",Context.MODE_PRIVATE)));
             outputWriter.write(Integer.toString(timer)+endOfLine);
+            outputWriter.write(Integer.toString(score)+endOfLine);
             for(int index=0;index<tripletTab.length;index++) {
                 for (int i = 0; i < tripletTab[index].length; i++) {
                     outputWriter.write(Integer.toString(tripletTab[index][i]) + ",");
@@ -434,4 +439,11 @@ public class UserData {
         }
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }

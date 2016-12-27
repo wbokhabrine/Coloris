@@ -45,7 +45,7 @@ public class menu extends Activity {
     /* lancement du jeu coloris a faire*/
     public void New_game(View view) {
         Intent intent = new Intent(this, p8_Sokoban.class);
-        //intent.putExtra("lvl", "1");
+        intent.putExtra("mode", "0");
         intent.putExtra("sound",Boolean.toString(userData.getActiveSound()));
         startActivityForResult(intent,0); // on attend en résultat l'état du jeu (en cours ou terminé)
 
@@ -54,7 +54,10 @@ public class menu extends Activity {
     //permet de reprendre une partie sauvegardé
     public void Continue(View view) {
         if (userData.getGameSaved()) {
-           /* a faire*/ ;
+            Intent intent = new Intent(this, p8_Sokoban.class);
+            intent.putExtra("mode", "1");
+            intent.putExtra("sound",Boolean.toString(userData.getActiveSound()));
+            startActivityForResult(intent,0);
         } else {
             Toast.makeText(this, "Impossible de reprendre une partie, aucune partie n'existe.",
                     Toast.LENGTH_LONG).show();

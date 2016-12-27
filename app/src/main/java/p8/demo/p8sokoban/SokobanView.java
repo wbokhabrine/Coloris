@@ -6,7 +6,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,6 +17,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import java.util.Timer;
 
 public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
     /*//Level en cours
@@ -46,8 +50,16 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
     private Resources 	mRes;
     private Context 	mContext;
 
+    //boolean savoir si on doit creer une partie
+    private Boolean reload=true;
+    //socre et temps
+    private int score=0;
+    private Integer time; // compte à rebours en secondes
+    long t1 = 0;
+    long t2 = 0;
+    long tDiff = 0;
     // tableau modelisant la carte du jeu
-    int[][] carte;
+    int[][] carte=new int [8][8];
 
     // 3 tableau généré aléatoirement
     private int [][] tripletTab = new int[3][3];
@@ -186,14 +198,20 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
     // chargement du niveau a partir du tableau de reference du niveau
     public void loadlevel() {
+        //on initialise le chrono au temps actuel
+        t1=System.currentTimeMillis();
 
-        carte=ref;
+        if(reload) {
+            score=0;
+            time=60;
+            carte = ref;
 
-        // init du triplettab
-       for(int i=0; i < 3; i++){
-            for(int j=0; j < 3; j++) {
-                tripletTab[i][j]=(int)( Math.random()*( 6 - 1 + 1 ) ) + 1;
-                Log.i("debug","trip: "+ tripletTab[i][j]);
+            // init du triplettab
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    tripletTab[i][j] = (int) (Math.random() * (6 - 1 + 1)) + 1;
+                    //Log.i("debug","trip: "+ tripletTab[i][j]);
+                }
             }
         }
 
@@ -203,7 +221,7 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
     // initialisation du jeu
     public void initparameters() {
-    	paint = new Paint();
+        paint = new Paint();
     	paint.setColor(0xff0000);
     	
     	paint.setDither(true);
@@ -213,7 +231,6 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
     	paint.setStrokeCap(Paint.Cap.ROUND);
     	paint.setStrokeWidth(3);    	
     	paint.setTextAlign(Paint.Align.LEFT);
-        carte           = new int[carteHeight][carteWidth];
         carteTopAnchor  = carteTileSize;
         carteLeftAnchor = (getWidth()- carteWidth*carteTileSize)/2;
 
@@ -327,6 +344,38 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
             }
         }
     }
+
+    private void paintInfoBar(Canvas canvas){
+        int nextHighScore=0;
+        Rect timeBounds=new Rect();
+        Rect scoreBounds=new Rect();
+        Rect highScoreBounds=new Rect();
+        String strScore=new String("Score: "+Integer.toString(score));
+        String strHighScore=new String("Next HighScore: "+Integer.toString(nextHighScore));
+        String strTime=new String("Temps: "+Integer.toString(time));
+        Paint paint = new Paint();
+
+
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(14);
+        paint.setAntiAlias(true);
+
+        paint.getTextBounds(strScore,0,strScore.length(),scoreBounds);
+        paint.getTextBounds(strHighScore,0,strHighScore.length(),highScoreBounds);
+        paint.getTextBounds(strTime,0,strTime.length(),timeBounds);
+
+        int espacement=(canvas.getWidth()- (timeBounds.width()+scoreBounds.width()+highScoreBounds.width()) ) / 2 ;
+        int maxHeigh=scoreBounds.height();
+        if(highScoreBounds.height()>maxHeigh){
+            maxHeigh=highScoreBounds.height();
+        }
+        if(timeBounds.height()>maxHeigh){
+            maxHeigh=timeBounds.height();
+        }
+        canvas.drawText(strScore,0,canvas.getHeight()-maxHeigh,paint);
+        canvas.drawText(strHighScore,scoreBounds.width()+espacement,canvas.getHeight()-maxHeigh,paint);
+        canvas.drawText(strTime,scoreBounds.width()+espacement+highScoreBounds.width()+espacement,canvas.getHeight()-maxHeigh,paint);
+    }
     
   /*  // dessin du curseur du joueur
     private void paintPlayer(Canvas canvas) {
@@ -362,6 +411,7 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
         } else {
             paintcarte(canvas);
             paintTripletTab(canvas);
+            paintInfoBar(canvas);
             /*paintPlayer(canvas);*/
           /*  paintdiamants(canvas);*/
         /*    paintarrow(canvas); */
@@ -381,7 +431,13 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
     
     public void surfaceDestroyed(SurfaceHolder arg0) {
-    	Log.i("-> FCT <-", "surfaceDestroyed");    	        
+        if(userData.getGameSaved()){
+            userData.setTimer(time);
+            userData.setScore(score);
+            userData.setTripletTab(tripletTab);
+            userData.setGameGrid(carte);
+        }
+        Log.i("-> FCT <-", "surfaceDestroyed");
     }    
 
     /**
@@ -396,6 +452,14 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
                     cv_thread.sleep(40);
                     /*currentStepZone = (currentStepZone + 1) % maxStepZone;*/
                     try {
+                        t2=System.currentTimeMillis();
+                        tDiff=t2-t1;
+                        if(tDiff >=1000){
+                            if(time>0){
+                                time-=1;
+                            }
+                            t1=System.currentTimeMillis();
+                        }
                         c = holder.lockCanvas(null);
                         nDraw(c);
                     } finally {
@@ -409,6 +473,22 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
             }
         }
 
+    }
+
+    public void setCarte(int[][]carte){
+        for(int i=0;i<carte.length && i<this.carte.length;i++){
+            for(int y=0;y<carte[i].length && y<this.carte[i].length;y++){
+                this.carte[i][y]=carte[i][y];
+            }
+        }
+    }
+
+    public void setTriplet(int[][]triplet){
+        for(int i=0;i<triplet.length && i<this.tripletTab.length;i++){
+            for(int y=0;y<triplet[i].length && y<this.tripletTab[i].length;y++){
+                this.tripletTab[i][y]=triplet[i][y];
+            }
+        }
     }
     
   /*  // verification que nous sommes dans le tableau
@@ -632,4 +712,17 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
     public void setLvl(int id){
 
     }
+
+    public void setScore(int score){
+        this.score=score;
+    }
+
+    public void setTime(int time){
+        this.time=time;
+    }
+
+    public void setReload(Boolean reload){
+        this.reload=reload;
+    }
+
 }

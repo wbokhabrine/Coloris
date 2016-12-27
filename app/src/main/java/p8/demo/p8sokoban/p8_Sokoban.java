@@ -22,16 +22,28 @@ public class p8_Sokoban extends Activity {
         super.onCreate(savedInstanceState);
 
         userData=new UserData(this);
+        userData.readUserData();
         Intent intent = getIntent();
-       // String lvl = intent.getStringExtra("lvl");
+        String mode = intent.getStringExtra("mode"); // 0 = new, 1 = continue last game
         userData.setActiveSound(Boolean.parseBoolean(intent.getStringExtra("sound")));
         userData.setGameSaved(true);
         setContentView(R.layout.main);
         mSokobanView = (SokobanView) findViewById(R.id.SokobanView);
-       // mSokobanView.setLvl(Integer.parseInt(lvl)); /* faudras tester ici si on a une game existante et faire des setcarte etc si oui*/
+
+        if(Integer.parseInt(mode)==0){
+            //on lance une nouvelle partie
+            mSokobanView.setReload(true);
+        }else if (Integer.parseInt(mode)==1){
+            Log.i("debug","load partie, time: "+userData.getTimer());
+            //on charge la partie sauvegardée
+            mSokobanView.setReload(false);
+            mSokobanView.setCarte(userData.getGameGrid());
+            mSokobanView.setTriplet(userData.getTripletTab());
+            mSokobanView.setScore(userData.getScore());
+            mSokobanView.setTime(userData.getTimer());
+        }
         mSokobanView.setUserData(userData);
         mSokobanView.setVisibility(View.VISIBLE);
-
     }
 
     @Override
@@ -42,8 +54,6 @@ public class p8_Sokoban extends Activity {
         returnIntent.putExtra("gameSaved", Boolean.toString(userData.getGameSaved()));
         setResult(1, returnIntent);
         super.onBackPressed();
-
-
     }
 
     @Override
@@ -51,6 +61,7 @@ public class p8_Sokoban extends Activity {
         //on écris les données avant de mettre sur pause
         userData.writeUserConfigData();
         if(userData.getGameSaved()){
+            Log.i("debug","partie saved, time: "+userData.getTimer());
             userData.writeUserGameData();
         }
         super.onPause();
