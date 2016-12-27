@@ -165,6 +165,14 @@ public class UserData {
         }
     }
 
+    public void writeUserConfigData(){
+        writeConfigFile();
+    }
+
+    public void writeUserGameData(){
+        writeGameFile();
+    }
+
     /*
         debugLog():
         Afficher dans les logI le contenue de la classe userData de façon structuré

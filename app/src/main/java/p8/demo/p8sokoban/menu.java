@@ -3,6 +3,7 @@ package p8.demo.p8sokoban;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,9 +15,7 @@ import android.widget.Toast;
 
 public class menu extends Activity {
     private int state;
-    private boolean song;
-    private Boolean gameAlreadyExist;
-
+    private UserData userData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,14 +23,21 @@ public class menu extends Activity {
         super.onCreate(savedInstanceState);
         // charge le fichier menu.xml comme vue de l'activité
         setContentView(R.layout.menu);
+
         // l'etat 0 permet de savoir que on est dans le layout menu
         state = 0;
 
         //Récupération des informations de la base de donnée
-        song=true;
-        gameAlreadyExist=false;
+        userData=new UserData(this);
+        userData.readUserData(); // on lis les données en interne
+        if(!userData.getPrefCharged()){ // on initialise par défaut si aucune préf n'a pu etre chargée
+            userData.setActiveSound(true);
+            userData.setGameSaved(false);
+        }
 
-
+        //pour debuger, affiche les variables son activé et partie sauveargée
+        Log.i("debug","son: "+Boolean.toString(userData.getActiveSound()));
+        Log.i("debug","game exist: "+Boolean.toString(userData.getGameSaved()));
 
         // setContentView(R.layout.menu);
         // recuperation de la vue une voie cree � partir de son id
@@ -44,13 +50,14 @@ public class menu extends Activity {
     public void New_game(View view) {
         Intent intent = new Intent(this, p8_Sokoban.class);
         intent.putExtra("lvl", "1");
-        startActivity(intent);
+        intent.putExtra("sound",Boolean.toString(userData.getActiveSound()));
+        startActivityForResult(intent,0); // on attent en résultat l'état du jeu (en cours ou terminé)
 
     }
 
     //permet de reprendre une partie sauvegardé
     public void Continue(View view) {
-        if (gameAlreadyExist) {
+        if (userData.getGameSaved()) {
            /* a faire*/ ;
         } else {
             Toast.makeText(this, "Impossible de reprendre une partie, aucune partie n'existe.",
@@ -91,14 +98,14 @@ public class menu extends Activity {
 
     // onclick pour active le son
     public void Song_on(View view) {
-        song=true;
+        userData.setActiveSound(true);
         Toast.makeText(this, "Son activé",
                 Toast.LENGTH_SHORT).show();
     }
 
     // onclick pour desactive le son
     public void Song_off(View view) {
-        song=false;
+        userData.setActiveSound(false);
         Toast.makeText(this, "Son désactivé",
                 Toast.LENGTH_SHORT).show();
 
@@ -121,4 +128,32 @@ public class menu extends Activity {
 
 
     }
+
+    @Override
+    public void onPause(){
+        //on écris les données avant de mettre sur pause
+        userData.writeUserConfigData();
+        super.onPause();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
+
+    //onActivityResult, on récupere l'état du jeu (en cours ou terminé)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( requestCode==0 && resultCode==1 ) {
+            String intentReturn = data.getStringExtra("gameSaved");
+            userData.setGameSaved(Boolean.parseBoolean(intentReturn));
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

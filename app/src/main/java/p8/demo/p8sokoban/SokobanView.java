@@ -18,7 +18,7 @@ import android.view.SurfaceView;
 public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
     //Level en cours
     private int IdLevel=1;
-
+    private UserData userData;
 	// Declaration des images
     private Bitmap 		block;
     private Bitmap 		diamant;
@@ -172,7 +172,6 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
      */
     public SokobanView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        
 
         // permet d'ecouter les surfaceChanged, surfaceCreated, surfaceDestroyed        
     	holder = getHolder();
@@ -516,9 +515,12 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
                IdLevel=2;
                loadlevel2();
            }
-           else if(IdLevel==2) {
+           /*else if(IdLevel==2) {
                IdLevel=3;
                loadlevel3();
+           }*/
+           else{
+               userData.setGameSaved(false);
            }
        }
 
@@ -553,5 +555,8 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
     public void setLvl(int id){
         this.IdLevel=id;
+    }
+    public void setUserData(UserData userData){
+        this.userData=userData;
     }
 }
