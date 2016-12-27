@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
     /*//Level en cours
@@ -47,6 +48,15 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
     // tableau modelisant la carte du jeu
     int[][] carte;
+
+    // 3 tableau généré aléatoirement
+    private int [][] tripletTab = new int[3][3];
+    // 3 tab 2 coordonnée X Y pour le deplacement d'un tableau avec le touché
+    private float [][] ontouchtab = {
+            {0,0},
+            {0,0},
+            {0,0}
+    };
     
     // ancres pour pouvoir centrer la carte du jeu
     int        carteTopAnchor;                   // coordonn�es en Y du point d'ancrage de notre carte
@@ -55,7 +65,7 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
     // taille de la carte
     static final int    carteWidth    = 8;
     static final int    carteHeight   = 8;
-    static final int    carteTileSize = 35;
+    static final int    carteTileSize = 33;
 
     // constante modelisant les differentes couleur de cases
     static final int    CST_block_vide     = 0;
@@ -167,9 +177,11 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
         cv_thread   = new Thread(this);
 
         // prise de focus pour gestion des touches
-        setFocusable(true); 
-        	
-    	
+        setFocusable(true);
+        setOnTouchListener(_otc);
+
+
+
     }    
 
     // chargement du niveau a partir du tableau de reference du niveau
@@ -177,14 +189,14 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
         carte=ref;
 
-        /*xPlayer = refxPlayer;
-        yPlayer = refyPlayer;
-        nbDiamond=4;
+        // init du triplettab
+       for(int i=0; i < 3; i++){
+            for(int j=0; j < 3; j++) {
+                tripletTab[i][j]=(int)( Math.random()*( 6 - 1 + 1 ) ) + 1;
+                Log.i("debug","trip: "+ tripletTab[i][j]);
+            }
+        }
 
-        for (int i=0; i< nbDiamond; i++) {
-            diamants[i][1] = refdiamants[i][1];
-            diamants[i][0] = refdiamants[i][0];
-        }*/
     }
 
 
@@ -266,6 +278,55 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
             }
         }
     }
+
+
+    private void paintTripletTab(Canvas canvas) {
+        int halfCarteLeftAnchor = carteLeftAnchor/2;
+
+        //i*halfCarteLeftAnchor  pour decaler les 3 tableau en x
+        // j*carteTileSize afficher chaque cube en x
+        // i*3*carteTileSize prendre en compte l'affichage de chaque case des tab precedent
+        //ontouchtab[i][0] permet le scroll en X
+
+        for (int i=0; i< 3 ; i++) {
+            for (int j=0; j< 3; j++) {
+
+
+                switch (tripletTab[i][j]) {
+                    case CST_block_blanc:
+                        canvas.drawBitmap(block_blanc, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
+                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
+                        break;
+                    case CST_block_bleu:
+                        canvas.drawBitmap(block_bleu, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
+                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
+                        break;
+                    case CST_block_jaune:
+                        canvas.drawBitmap(block_jaune, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
+                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
+                        break;
+                    case CST_block_rose:
+                        canvas.drawBitmap(block_rose, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
+                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
+                        break;
+                    case CST_block_rouge:
+                        canvas.drawBitmap(block_rouge, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
+                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
+                        break;
+                    case CST_block_vert:
+                        canvas.drawBitmap(block_vert, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
+                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
+                        break;
+                  /*  case CST_zone:
+                    	canvas.drawBitmap(zone[currentStepZone],carteLeftAnchor+j*carteTileSize+ half, carteTopAnchor+ carteHeight*carteTileSize+3, null);
+                        break;*/
+                  /*  case CST_vide:
+                    	canvas.drawBitmap(vide,carteLeftAnchor+j*carteTileSize+ half, carteTopAnchor+ carteHeight*carteTileSize+3, null);
+                        break;*/
+                }
+            }
+        }
+    }
     
   /*  // dessin du curseur du joueur
     private void paintPlayer(Canvas canvas) {
@@ -299,7 +360,8 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
         	paintcarte(canvas);
         	paintwin(canvas);        	
         } else {
-        	paintcarte(canvas);
+            paintcarte(canvas);
+            paintTripletTab(canvas);
             /*paintPlayer(canvas);*/
           /*  paintdiamants(canvas);*/
         /*    paintarrow(canvas); */
@@ -393,7 +455,9 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-    	Log.i("-> FCT <-", "onKeyUp: "+ keyCode); 
+    	Log.i("-> FCT <-", "onKeyUp: "+ keyCode);
+
+
     	
        /* int xTmpPlayer	= xPlayer;
         int yTmpPlayer  = yPlayer;
@@ -443,11 +507,50 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 	        }      */
 	    return true;   
     }
+// retourne 0, 1 ou 2 qui correspond à l'indice du tripletTab touché
+ int hitTripletTab( MotionEvent event){
+     float tx=carteTileSize,ty=carteTileSize;
+     float  y=event.getY(),x=event.getX();
 
-    
+     float margex;
+     float margey;
+
+     int resx;
+     int resy;
+
+     int halfCarteLeftAnchor=carteLeftAnchor/2;
+
+
+     for(int i=0;i < 3;i++){
+         margex=i*halfCarteLeftAnchor+ i*3*carteTileSize  ;
+         margey=carteTopAnchor+carteWidth*carteTileSize+carteTileSize;
+
+         resx=(int)((x-margex)/tx);
+         resy=(int)((y-margey)/ty);
+
+         if(resx==0 && resy==0)
+             Log.i("-> FCT <-", "tab Case (0,"+i+") touchée "+y);
+         if(resx==1 && resy==0)
+             Log.i("-> FCT <-", "tab Case (1,"+i+")  touchée  "+y);
+         if(resx==2 && resy==0)
+             Log.i("-> FCT <-", "tab Case (2,"+i+") touchée "+y);
+
+         if(resx==0 && resy==0 ||resx==1 && resy==0 || resx==2 && resy==0 ){
+
+             return i;
+
+         }
+
+
+     }
+
+    return -1;
+ }
     // fonction permettant de recuperer les evenements tactiles
     public boolean onTouchEvent (MotionEvent event) {
-         Log.i("-> FCT <-", "onTouchEvent: "+ event.getX());
+        if(event.getAction() == MotionEvent.ACTION_DOWN)
+            Log.i("-> FCT <-", "onTouchEvent: "+ event.getX());
+
        if(isWon()){
           /* if(IdLevel==1){
                IdLevel=2;
@@ -460,6 +563,7 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
            userData.setGameSaved(false);
        }
 
+        /* Hit sur la carte */
         float tx=carteTileSize,ty=carteTileSize;
         float margex=carteLeftAnchor;
         float margey=carteTopAnchor;
@@ -470,6 +574,9 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
         if(resx==5 && resy==3)
             Log.i("-> FCT <-", "Case (5,3) touchée");
+
+
+
 
 
      /* if (event.getY()<50) {
@@ -488,6 +595,35 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
     	return super.onTouchEvent(event);
     }
+
+    static int index=-1;
+    //permet de scroll les tableaux
+    private OnTouchListener _otc = new OnTouchListener(){
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Log.i("Info","Ontouch");
+            if(event.getAction()==MotionEvent.ACTION_DOWN){
+                index= hitTripletTab(event);
+            }
+            if(event.getAction()== MotionEvent.ACTION_UP){
+
+                ontouchtab[0][0] = 0;
+                ontouchtab[0][1] = 0;
+                ontouchtab[1][0] = 0;
+                ontouchtab[1][1] = 0;
+                ontouchtab[2][0] = 0;
+                ontouchtab[2][1] = 0;
+                index = -1;
+            }
+
+            if(index != -1) {
+                ontouchtab[index][0] = event.getX() - carteTileSize - carteTileSize/2  - (index * carteLeftAnchor/2 + index * 3 * carteTileSize);
+                ontouchtab[index][1] = event.getY() - carteTileSize * 2 - (carteTopAnchor + carteWidth * carteTileSize + carteTileSize);
+            }
+
+                return true;
+        }
+    };
 
     public void setUserData(UserData userData){
         this.userData=userData;

@@ -28,7 +28,7 @@ public class p8_Sokoban extends Activity {
         userData.setGameSaved(true);
         setContentView(R.layout.main);
         mSokobanView = (SokobanView) findViewById(R.id.SokobanView);
-       // mSokobanView.setLvl(Integer.parseInt(lvl));
+       // mSokobanView.setLvl(Integer.parseInt(lvl)); /* faudras tester ici si on a une game existante et faire des setcarte etc si oui*/
         mSokobanView.setUserData(userData);
         mSokobanView.setVisibility(View.VISIBLE);
 
