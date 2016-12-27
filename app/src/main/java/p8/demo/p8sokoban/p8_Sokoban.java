@@ -23,12 +23,12 @@ public class p8_Sokoban extends Activity {
 
         userData=new UserData(this);
         Intent intent = getIntent();
-        String lvl = intent.getStringExtra("lvl");
+       // String lvl = intent.getStringExtra("lvl");
         userData.setActiveSound(Boolean.parseBoolean(intent.getStringExtra("sound")));
         userData.setGameSaved(true);
         setContentView(R.layout.main);
         mSokobanView = (SokobanView) findViewById(R.id.SokobanView);
-        mSokobanView.setLvl(Integer.parseInt(lvl));
+       // mSokobanView.setLvl(Integer.parseInt(lvl));
         mSokobanView.setUserData(userData);
         mSokobanView.setVisibility(View.VISIBLE);
 
@@ -36,7 +36,7 @@ public class p8_Sokoban extends Activity {
 
     @Override
     public void onBackPressed(){
-       // System.out.println("teeeest");
+        // System.out.println("teeeest");
         mSokobanView.in=false;
         Intent returnIntent = new Intent();
         returnIntent.putExtra("gameSaved", Boolean.toString(userData.getGameSaved()));

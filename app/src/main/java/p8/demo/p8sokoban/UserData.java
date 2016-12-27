@@ -166,10 +166,12 @@ public class UserData {
     }
 
     public void writeUserConfigData(){
+
         writeConfigFile();
     }
 
     public void writeUserGameData(){
+
         writeGameFile();
     }
 

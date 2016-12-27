@@ -3,6 +3,7 @@ package p8.demo.p8sokoban;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,10 +15,7 @@ import android.widget.Toast;
 
 public class menu extends Activity {
     private int state;
-    private Boolean gameAlreadyExist;
-
-    private UserData udata;
-
+    private UserData userData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,27 +23,37 @@ public class menu extends Activity {
         super.onCreate(savedInstanceState);
         // charge le fichier menu.xml comme vue de l'activité
         setContentView(R.layout.menu);
+
         // l'etat 0 permet de savoir que on est dans le layout menu
         state = 0;
 
         //Récupération des informations de la base de donnée
-        udata=new UserData(this);
-        udata.readUserData(); //Lecture de la base de donnée
-        gameAlreadyExist=udata.getGameSaved();
+        userData=new UserData(this);
+        userData.readUserData(); // on lis les données en interne
+        if(!userData.getPrefCharged()){ // on initialise par défaut si aucune préf n'a pu etre chargée
+            userData.setActiveSound(true);
+            userData.setGameSaved(false);
+        }
+
+        //pour debuger, affiche les variables son activé et partie sauveargée
+        Log.i("debug","son: "+Boolean.toString(userData.getActiveSound()));
+        Log.i("debug","game exist: "+Boolean.toString(userData.getGameSaved()));
+
     }
 
 
     /* lancement du jeu coloris a faire*/
     public void New_game(View view) {
         Intent intent = new Intent(this, p8_Sokoban.class);
-        intent.putExtra("lvl", "1");
-        startActivity(intent);
+        //intent.putExtra("lvl", "1");
+        intent.putExtra("sound",Boolean.toString(userData.getActiveSound()));
+        startActivityForResult(intent,0); // on attend en résultat l'état du jeu (en cours ou terminé)
 
     }
 
     //permet de reprendre une partie sauvegardé
     public void Continue(View view) {
-        if (gameAlreadyExist) {
+        if (userData.getGameSaved()) {
            /* a faire*/ ;
         } else {
             Toast.makeText(this, "Impossible de reprendre une partie, aucune partie n'existe.",
@@ -56,20 +64,10 @@ public class menu extends Activity {
 
     // Affiche les 3 meilleurs scores
     public void Best_score(View view) {
-        String Pseudo1 , bestScore1 ;
-        String Pseudo2 , bestScore2 ;
-        String Pseudo3 , bestScore3 ;
+        String Pseudo1 = "NONE", bestScore1 = "0.0";
+        String Pseudo2 = "NONE", bestScore2 = "0.0";
+        String Pseudo3 = "NONE", bestScore3 = "0.0";
 
-        Pseudo1= udata.getNameHighScoreAtIndex(0);
-        bestScore1 = String.valueOf(udata.getHighScoreAtIndex(0));
-        Pseudo2= udata.getNameHighScoreAtIndex(1);
-        bestScore2 = String.valueOf(udata.getHighScoreAtIndex(1));
-        Pseudo3= udata.getNameHighScoreAtIndex(2);
-        bestScore3 = String.valueOf(udata.getHighScoreAtIndex(2));
-
-        if(Pseudo1.equals(""))Pseudo1 = "None";
-        if(Pseudo2.equals(""))Pseudo2 = "None";
-        if(Pseudo3.equals(""))Pseudo3 = "None";
 
         setContentView(R.layout.best_score);
         // l'etat 1 permet de savoir que on est dans le layout best_score
@@ -96,19 +94,14 @@ public class menu extends Activity {
 
     // onclick pour active le son
     public void Song_on(View view) {
-        udata.debugLog();
-        udata.setActiveSound(true);
-        udata.writeUserData(); // met a jour le booléan dans le file
+        userData.setActiveSound(true);
         Toast.makeText(this, "Son activé",
                 Toast.LENGTH_SHORT).show();
     }
 
     // onclick pour desactive le son
     public void Song_off(View view) {
-        udata.debugLog();
-
-        udata.setActiveSound(false);
-        udata.writeUserData(); // met a jour le booléan dans le file
+        userData.setActiveSound(false);
         Toast.makeText(this, "Son désactivé",
                 Toast.LENGTH_SHORT).show();
 
@@ -131,4 +124,32 @@ public class menu extends Activity {
 
 
     }
+
+    @Override
+    public void onPause(){
+        //on écris les données avant de mettre sur pause
+        userData.writeUserConfigData();
+        super.onPause();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
+
+    //onActivityResult, on récupere l'état du jeu (en cours ou terminé)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( requestCode==0 && resultCode==1 ) {
+            String intentReturn = data.getStringExtra("gameSaved");
+            userData.setGameSaved(Boolean.parseBoolean(intentReturn));
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

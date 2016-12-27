@@ -19,7 +19,9 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
     /*//Level en cours
     private int IdLevel=1;*/
 
-	// Declaration des images
+    private UserData userData;
+
+    // Declaration des images
     private Bitmap 		block_vide;
     private Bitmap 		 block_bleu;
     private Bitmap 		 block_blanc;
@@ -36,6 +38,8 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
     private Bitmap 		left;
     private Bitmap 		right;*/
     private Bitmap 		win;
+
+
 
 	// Declaration des objets Ressources et Context permettant d'acc�der aux ressources de notre application et de les charger
     private Resources 	mRes;
@@ -453,6 +457,7 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
                IdLevel=3;
                loadlevel3();
            }*/
+           userData.setGameSaved(false);
        }
 
         float tx=carteTileSize,ty=carteTileSize;
@@ -482,6 +487,10 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
     	}*/
 
     	return super.onTouchEvent(event);
+    }
+
+    public void setUserData(UserData userData){
+        this.userData=userData;
     }
 
     public void setLvl(int id){
