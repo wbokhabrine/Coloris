@@ -1,31 +1,11 @@
 [
     {
-        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/vide.png",
-        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/vide.png"
-    },
-    {
-        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/block.png",
-        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/block.png"
-    },
-    {
-        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/zone_02.png",
-        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/zone_02.png"
-    },
-    {
-        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/perso.png",
-        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/perso.png"
+        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/block_blanc.png",
+        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/block_blanc.png"
     },
     {
         "merged": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/res/merged/debug/drawable-ldpi/zone_04.png",
         "source": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/src/main/res/drawable-ldpi/zone_04.png"
-    },
-    {
-        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/icon.png",
-        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/icon.png"
-    },
-    {
-        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/zone_03.png",
-        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/zone_03.png"
     },
     {
         "merged": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/res/merged/debug/drawable-ldpi/zone_01.png",
@@ -36,16 +16,12 @@
         "source": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/src/main/res/drawable-ldpi/diamant.png"
     },
     {
+        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/block_vert.png",
+        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/block_vert.png"
+    },
+    {
         "merged": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/res/merged/debug/drawable-ldpi/vide.png",
         "source": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/src/main/res/drawable-ldpi/vide.png"
-    },
-    {
-        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/zone_04.png",
-        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/zone_04.png"
-    },
-    {
-        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/zone_01.png",
-        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/zone_01.png"
     },
     {
         "merged": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/res/merged/debug/drawable-ldpi/icon.png",
@@ -54,10 +30,6 @@
     {
         "merged": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/res/merged/debug/drawable-ldpi/perso.png",
         "source": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/src/main/res/drawable-ldpi/perso.png"
-    },
-    {
-        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/diamant.png",
-        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/diamant.png"
     },
     {
         "merged": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/res/merged/debug/drawable-ldpi/zone_03.png",
@@ -70,5 +42,21 @@
     {
         "merged": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/res/merged/debug/drawable-ldpi/zone_02.png",
         "source": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/src/main/res/drawable-ldpi/zone_02.png"
+    },
+    {
+        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/block_bleu.png",
+        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/block_bleu.png"
+    },
+    {
+        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/block_rouge.png",
+        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/block_rouge.png"
+    },
+    {
+        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/block_vide.png",
+        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/block_vide.png"
+    },
+    {
+        "merged": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/res/merged/debug/drawable-ldpi/block_jaune.png",
+        "source": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/drawable-ldpi/block_jaune.png"
     }
 ]

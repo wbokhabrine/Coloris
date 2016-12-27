@@ -14,8 +14,9 @@ import android.widget.Toast;
 
 public class menu extends Activity {
     private int state;
-    private boolean song;
     private Boolean gameAlreadyExist;
+
+    private UserData udata;
 
 
     @Override
@@ -28,15 +29,9 @@ public class menu extends Activity {
         state = 0;
 
         //Récupération des informations de la base de donnée
-        song=true;
-        gameAlreadyExist=false;
-
-
-
-        // setContentView(R.layout.menu);
-        // recuperation de la vue une voie cree � partir de son id
-        //mSokobanView.setVisibility(View.VISIBLE);
-        // rend visible la vue
+        udata=new UserData(this);
+        udata.readUserData(); //Lecture de la base de donnée
+        gameAlreadyExist=udata.getGameSaved();
     }
 
 
@@ -61,10 +56,20 @@ public class menu extends Activity {
 
     // Affiche les 3 meilleurs scores
     public void Best_score(View view) {
-        String Pseudo1 = "NONE", bestScore1 = "0.0";
-        String Pseudo2 = "NONE", bestScore2 = "0.0";
-        String Pseudo3 = "NONE", bestScore3 = "0.0";
+        String Pseudo1 , bestScore1 ;
+        String Pseudo2 , bestScore2 ;
+        String Pseudo3 , bestScore3 ;
 
+        Pseudo1= udata.getNameHighScoreAtIndex(0);
+        bestScore1 = String.valueOf(udata.getHighScoreAtIndex(0));
+        Pseudo2= udata.getNameHighScoreAtIndex(1);
+        bestScore2 = String.valueOf(udata.getHighScoreAtIndex(1));
+        Pseudo3= udata.getNameHighScoreAtIndex(2);
+        bestScore3 = String.valueOf(udata.getHighScoreAtIndex(2));
+
+        if(Pseudo1.equals(""))Pseudo1 = "None";
+        if(Pseudo2.equals(""))Pseudo2 = "None";
+        if(Pseudo3.equals(""))Pseudo3 = "None";
 
         setContentView(R.layout.best_score);
         // l'etat 1 permet de savoir que on est dans le layout best_score
@@ -91,14 +96,19 @@ public class menu extends Activity {
 
     // onclick pour active le son
     public void Song_on(View view) {
-        song=true;
+        udata.debugLog();
+        udata.setActiveSound(true);
+        udata.writeUserData(); // met a jour le booléan dans le file
         Toast.makeText(this, "Son activé",
                 Toast.LENGTH_SHORT).show();
     }
 
     // onclick pour desactive le son
     public void Song_off(View view) {
-        song=false;
+        udata.debugLog();
+
+        udata.setActiveSound(false);
+        udata.writeUserData(); // met a jour le booléan dans le file
         Toast.makeText(this, "Son désactivé",
                 Toast.LENGTH_SHORT).show();
 

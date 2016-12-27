@@ -18,9 +18,9 @@ ADDED from /home/wissam/AndroidStudioProjects/Coloris/app/src/main/AndroidManife
 application
 ADDED from /home/wissam/AndroidStudioProjects/Coloris/app/src/main/AndroidManifest.xml:6:5-16:19
 	android:label
-		ADDED from /home/wissam/AndroidStudioProjects/Coloris/app/src/main/AndroidManifest.xml:6:48-80
+		ADDED from /home/wissam/AndroidStudioProjects/Coloris/app/src/main/AndroidManifest.xml:6:47-79
 	android:icon
-		ADDED from /home/wissam/AndroidStudioProjects/Coloris/app/src/main/AndroidManifest.xml:6:18-47
+		ADDED from /home/wissam/AndroidStudioProjects/Coloris/app/src/main/AndroidManifest.xml:6:18-46
 activity#p8.demo.p8sokoban.menu
 ADDED from /home/wissam/AndroidStudioProjects/Coloris/app/src/main/AndroidManifest.xml:7:9-13:20
 	android:label
