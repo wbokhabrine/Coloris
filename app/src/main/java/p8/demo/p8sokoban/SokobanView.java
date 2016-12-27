@@ -63,13 +63,14 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
     // 3 tableau généré aléatoirement
     private int [][] tripletTab = new int[3][3];
+    private int orientation[]={0, 0, 0}; //orientation des tableaux, 4 etats de 0 à 3 inclu
     // 3 tab 2 coordonnée X Y pour le deplacement d'un tableau avec le touché
     private float [][] ontouchtab = {
             {0,0},
             {0,0},
             {0,0}
     };
-    
+
     // ancres pour pouvoir centrer la carte du jeu
     int        carteTopAnchor;                   // coordonn�es en Y du point d'ancrage de notre carte
     int        carteLeftAnchor;                  // coordonn�es en X du point d'ancrage de notre carte
@@ -307,40 +308,69 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
         for (int i=0; i< 3 ; i++) {
             for (int j=0; j< 3; j++) {
-
-
-                switch (tripletTab[i][j]) {
-                    case CST_block_blanc:
-                        canvas.drawBitmap(block_blanc, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
-                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
-                        break;
-                    case CST_block_bleu:
-                        canvas.drawBitmap(block_bleu, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
-                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
-                        break;
-                    case CST_block_jaune:
-                        canvas.drawBitmap(block_jaune, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
-                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
-                        break;
-                    case CST_block_rose:
-                        canvas.drawBitmap(block_rose, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
-                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
-                        break;
-                    case CST_block_rouge:
-                        canvas.drawBitmap(block_rouge, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
-                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
-                        break;
-                    case CST_block_vert:
-                        canvas.drawBitmap(block_vert, i*halfCarteLeftAnchor + j*carteTileSize+  i*3*carteTileSize + ontouchtab[i][0],
-                                carteTopAnchor+carteTileSize+ carteWidth*carteTileSize+ontouchtab[i][1], null);
-                        break;
+                if((orientation[i]&0x01) ==0)
+                    switch (tripletTab[i][j]) {
+                        case CST_block_blanc:
+                            canvas.drawBitmap(block_blanc, i * halfCarteLeftAnchor + j * carteTileSize + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor + carteTileSize + carteWidth * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                        case CST_block_bleu:
+                            canvas.drawBitmap(block_bleu, i * halfCarteLeftAnchor + j * carteTileSize + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor + carteTileSize + carteWidth * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                        case CST_block_jaune:
+                            canvas.drawBitmap(block_jaune, i * halfCarteLeftAnchor + j * carteTileSize + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor + carteTileSize + carteWidth * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                        case CST_block_rose:
+                            canvas.drawBitmap(block_rose, i * halfCarteLeftAnchor + j * carteTileSize + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor + carteTileSize + carteWidth * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                        case CST_block_rouge:
+                            canvas.drawBitmap(block_rouge, i * halfCarteLeftAnchor + j * carteTileSize + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor + carteTileSize + carteWidth * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                        case CST_block_vert:
+                            canvas.drawBitmap(block_vert, i * halfCarteLeftAnchor + j * carteTileSize + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor + carteTileSize + carteWidth * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                    }
+                else{
+                    switch (tripletTab[i][j]) {
+                        case CST_block_blanc:
+                            canvas.drawBitmap(block_blanc, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor  + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                        case CST_block_bleu:
+                            canvas.drawBitmap(block_bleu, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor  + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                        case CST_block_jaune:
+                            canvas.drawBitmap(block_jaune, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor  + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                        case CST_block_rose:
+                            canvas.drawBitmap(block_rose, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor  + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                        case CST_block_rouge:
+                            canvas.drawBitmap(block_rouge, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor  + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
+                            break;
+                        case CST_block_vert:
+                            canvas.drawBitmap(block_vert, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                                    carteTopAnchor  + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
+                            break;
                   /*  case CST_zone:
                     	canvas.drawBitmap(zone[currentStepZone],carteLeftAnchor+j*carteTileSize+ half, carteTopAnchor+ carteHeight*carteTileSize+3, null);
                         break;*/
                   /*  case CST_vide:
                     	canvas.drawBitmap(vide,carteLeftAnchor+j*carteTileSize+ half, carteTopAnchor+ carteHeight*carteTileSize+3, null);
                         break;*/
+                    }
+
                 }
+
             }
         }
     }
@@ -600,13 +630,25 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
      int halfCarteLeftAnchor=carteLeftAnchor/2;
 
+     /* i * halfCarteLeftAnchor + carteTileSize + i * 3 * carteTileSize + ontouchtab[i][0]
+             carteTopAnchor  + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1]*/
 
      for(int i=0;i < 3;i++){
-         margex=i*halfCarteLeftAnchor+ i*3*carteTileSize  ;
-         margey=carteTopAnchor+carteWidth*carteTileSize+carteTileSize;
+
+         if((orientation[i]&0x01)==1) {
+             margex = i * halfCarteLeftAnchor + carteTileSize + i * 3 * carteTileSize;
+             margey = carteTopAnchor + carteWidth * carteTileSize ;
+         }
+         else{
+             margex = i * halfCarteLeftAnchor + i * 3 * carteTileSize;
+             margey = carteTopAnchor + carteWidth * carteTileSize + carteTileSize;
+         }
+
 
          resx=(int)((x-margex)/tx);
          resy=(int)((y-margey)/ty);
+
+
 
          if(resx==0 && resy==0)
              Log.i("-> FCT <-", "tab Case (0,"+i+") touchée "+y);
@@ -615,10 +657,16 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
          if(resx==2 && resy==0)
              Log.i("-> FCT <-", "tab Case (2,"+i+") touchée "+y);
 
-         if(resx==0 && resy==0 ||resx==1 && resy==0 || resx==2 && resy==0 ){
+         if((orientation[i]&0x01)==1) {
+             if (resx == 0 && resy == 0 || resx == 0 && resy == 1 || resx == 0 && resy == 2) {
+                 return i;
+             }
 
-             return i;
-
+         }
+         else{
+             if (resx == 0 && resy == 0 || resx == 1 && resy == 0 || resx == 2 && resy == 0) {
+                 return i;
+             }
          }
 
 
@@ -626,6 +674,52 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
     return -1;
  }
+
+    // retourne s'il y'a eu un hit sur la carte et fais les actions correspondant au hit//
+    boolean hitcarte(MotionEvent event){
+        float tx=carteTileSize,ty=carteTileSize;
+        float margex=carteLeftAnchor;
+        float margey=carteTopAnchor;
+        float  y=event.getY(),x=event.getX();
+
+        //Log.i("fct ", "marge="+(x-margex));
+        int resx=(int)((x-margex)/tx);
+        int resy=(int)((y-margey)/ty);
+
+        if(lastindex==-1)return false;
+        if((orientation[lastindex]&0x01) == 1) {
+            if(resx<8&& resy<9&&  resy>2 && (x-margex>=0)){
+                Log.i("-> FCT <-", "Case carte (" + resx + "," + resy + ") touchée");
+                // verifie si il y'a des cases vides + colorie la map si oui et regenere le tab
+                if(carte[resy-1][resx] == CST_block_vide && carte[resy-2][resx] == CST_block_vide  && carte[resy-3][resx] ==  CST_block_vide ){
+                    carte[resy-1][resx]=tripletTab[lastindex][2];
+                    carte[resy-2][resx]=tripletTab[lastindex][1];
+                    carte[resy-3][resx]=tripletTab[lastindex][0];
+
+                    for (int j = 0; j < 3; j++)
+                        tripletTab[lastindex][j] = (int) (Math.random() * (6 - 1 + 1)) + 1;
+
+                }
+                return true;
+            }
+        }
+        else
+            if(resx<7&& resy<9&&  resx>0 && resy>0) {
+               Log.i("-> FCT <-", "Case carte (" + resx + "," + resy + ") touchée");
+                if(carte[resy-1][resx-1] == CST_block_vide && carte[resy-1][resx] == CST_block_vide  && carte[resy-1][resx+1] ==  CST_block_vide ){
+                    carte[resy-1][resx+1]=tripletTab[lastindex][2];
+                    carte[resy-1][resx]=tripletTab[lastindex][1];
+                    carte[resy-1][resx-1]=tripletTab[lastindex][0];
+                    for (int j = 0; j < 3; j++)
+                        tripletTab[lastindex][j] = (int) (Math.random() * (6 - 1 + 1)) + 1;
+
+                }
+
+                return true;
+            }
+
+        return false;
+    }
     // fonction permettant de recuperer les evenements tactiles
     public boolean onTouchEvent (MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN)
@@ -643,39 +737,18 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
            userData.setGameSaved(false);
        }
 
-        /* Hit sur la carte */
-        float tx=carteTileSize,ty=carteTileSize;
-        float margex=carteLeftAnchor;
-        float margey=carteTopAnchor;
-        float  y=event.getY(),x=event.getX();
 
-        int resx=(int)((x-margex)/tx);
-        int resy=(int)((y-margey)/ty);
-
-        if(resx==5 && resy==3)
-            Log.i("-> FCT <-", "Case (5,3) touchée");
-
-
-
-
-
-     /* if (event.getY()<50) {
-    		onKeyDown(KeyEvent.KEYCODE_DPAD_UP, null);
-    	} else if (event.getY()>getHeight()-50) {
-    		if (event.getX()>getWidth()-50) {
-        		onKeyDown(KeyEvent.KEYCODE_0, null);
-        	} else {
-        		onKeyDown(KeyEvent.KEYCODE_DPAD_DOWN, null);
-        	}
-    	} else if (event.getX()<50) {
-    		onKeyDown(KeyEvent.KEYCODE_DPAD_LEFT, null);
-    	} else if (event.getX()>getWidth()-50) {
-    		onKeyDown(KeyEvent.KEYCODE_DPAD_RIGHT, null);
-    	}*/
 
     	return super.onTouchEvent(event);
     }
 
+    void reverseTab(int indice){
+        int tmp = tripletTab[indice][0];
+        tripletTab[indice][0]= tripletTab[indice][2];
+        tripletTab[indice][2]=tmp;
+    }
+
+    static int lastindex=-1;
     static int index=-1;
     //permet de scroll les tableaux
     private OnTouchListener _otc = new OnTouchListener(){
@@ -684,21 +757,52 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
             Log.i("Info","Ontouch");
             if(event.getAction()==MotionEvent.ACTION_DOWN){
                 index= hitTripletTab(event);
+                lastindex=index;
             }
             if(event.getAction()== MotionEvent.ACTION_UP){
-
+                //remise à jour du scroll
                 ontouchtab[0][0] = 0;
                 ontouchtab[0][1] = 0;
                 ontouchtab[1][0] = 0;
                 ontouchtab[1][1] = 0;
                 ontouchtab[2][0] = 0;
                 ontouchtab[2][1] = 0;
+
+               if( hitcarte(event)==true){
+
+               }
+                else {
+                   if(lastindex!=-1) {
+                       orientation[lastindex] = (orientation[lastindex] + 1) % 4; //permet de boucler de 0 a 3
+                       switch (orientation[lastindex]) {
+                           case 0:
+                               reverseTab(lastindex);
+                               break;
+                           case 1:
+                           /* rien a faire juste a afficher verticalement*/
+                               break;
+                           case 2:
+                               reverseTab(lastindex);
+                               break;
+                           case 3:
+                               break;
+
+                       }
+                   }
+               }
                 index = -1;
             }
 
+
             if(index != -1) {
-                ontouchtab[index][0] = event.getX() - carteTileSize - carteTileSize/2  - (index * carteLeftAnchor/2 + index * 3 * carteTileSize);
-                ontouchtab[index][1] = event.getY() - carteTileSize * 2 - (carteTopAnchor + carteWidth * carteTileSize + carteTileSize);
+                if((orientation[index]&0x01) == 1) {
+                    ontouchtab[index][0] = event.getX() - carteTileSize - carteTileSize / 2 - (index * carteLeftAnchor / 2 + index * 3 * carteTileSize);
+                    ontouchtab[index][1] = event.getY() - carteTileSize * 3 - (carteTopAnchor + carteWidth * carteTileSize+ carteTileSize );
+                }
+                else {
+                    ontouchtab[index][0] = event.getX() - carteTileSize - carteTileSize/2  - (index * carteLeftAnchor/2 + index * 3 * carteTileSize);
+                    ontouchtab[index][1] = event.getY() - carteTileSize * 2 - (carteTopAnchor + carteWidth * carteTileSize + carteTileSize);
+                }
             }
 
                 return true;
