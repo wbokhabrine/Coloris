@@ -45,7 +45,7 @@ public class UserData {
             timer = 0;
             for (int i = 0; i < tabHighScore.length && i <tabNameHighScore.length; i++) {
                 tabHighScore[i] = 0;
-                tabNameHighScore[i] = new String("");
+                tabNameHighScore[i] = new String("NONE");
             }
 
             for (int i = 0; i < gameGrid.length; i++) {

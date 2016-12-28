@@ -9,9 +9,9 @@ import android.view.View;
 // declaration de notre activity h�rit�e de Activity
 
 
-public class p8_Sokoban extends Activity {
+public class Coloris extends Activity {
 
-    private SokobanView mSokobanView;
+    private ColorisView mColorisView;
     private UserData userData;
     /**
      * Called when the activity is first created.
@@ -28,30 +28,30 @@ public class p8_Sokoban extends Activity {
         userData.setActiveSound(Boolean.parseBoolean(intent.getStringExtra("sound")));
         userData.setGameSaved(true);
         setContentView(R.layout.main);
-        mSokobanView = (SokobanView) findViewById(R.id.SokobanView);
+        mColorisView = (ColorisView) findViewById(R.id.SokobanView);
         Log.i("debug","intent: "+mode);
         if(Integer.parseInt(mode)==0){
             //on lance une nouvelle partie
             Log.i("debug","new game");
-            mSokobanView.setReload(true);
+            mColorisView.setReload(true);
         }else if (Integer.parseInt(mode)==1){
             Log.i("debug","load partie, time: "+userData.getTimer());
             //on charge la partie sauvegardée
-            mSokobanView.setReload(false);
-            mSokobanView.setCarte(userData.getGameGrid());
-            mSokobanView.setTriplet(userData.getTripletTab());
-            mSokobanView.setOrientation(userData.getOrientationTab());
-            mSokobanView.setScore(userData.getScore());
-            mSokobanView.setTime(userData.getTimer());
+            mColorisView.setReload(false);
+            mColorisView.setCarte(userData.getGameGrid());
+            mColorisView.setTriplet(userData.getTripletTab());
+            mColorisView.setOrientation(userData.getOrientationTab());
+            mColorisView.setScore(userData.getScore());
+            mColorisView.setTime(userData.getTimer());
         }
-        mSokobanView.setUserData(userData);
-        mSokobanView.setVisibility(View.VISIBLE);
+        mColorisView.setUserData(userData);
+        mColorisView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onBackPressed(){
         // System.out.println("teeeest");
-        mSokobanView.in=false;
+        mColorisView.in=false;
         Intent returnIntent = new Intent();
         returnIntent.putExtra("gameSaved", Boolean.toString(userData.getGameSaved()));
         setResult(1, returnIntent);
@@ -62,6 +62,7 @@ public class p8_Sokoban extends Activity {
     public void onResume(){
         super.onResume();
         userData.readUserData();
+        mColorisView.setPause(false);
     }
 
     @Override
@@ -72,6 +73,7 @@ public class p8_Sokoban extends Activity {
             Log.i("debug","partie saved, time: "+userData.getTimer());
             userData.writeUserGameData();
         }
+        mColorisView.setPause(true);
         super.onPause();
     }
 

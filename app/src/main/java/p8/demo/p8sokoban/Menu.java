@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,7 +12,7 @@ import android.widget.Toast;
  * Created by wissam on 07/11/16.
  */
 
-public class menu extends Activity {
+public class Menu extends Activity {
     private int state;
     private UserData userData;
 
@@ -21,10 +20,10 @@ public class menu extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         // initialise notre activity avec le constructeur parent
         super.onCreate(savedInstanceState);
-        // charge le fichier menu.xml comme vue de l'activité
+        // charge le fichier Menu.xml comme vue de l'activité
         setContentView(R.layout.menu);
 
-        // l'etat 0 permet de savoir que on est dans le layout menu
+        // l'etat 0 permet de savoir que on est dans le layout Menu
         state = 0;
 
         //Récupération des informations de la base de donnée
@@ -44,7 +43,7 @@ public class menu extends Activity {
 
     /* lancement du jeu coloris a faire*/
     public void New_game(View view) {
-        Intent intent = new Intent(this, p8_Sokoban.class);
+        Intent intent = new Intent(this, Coloris.class);
         intent.putExtra("mode", "0");
         intent.putExtra("sound",Boolean.toString(userData.getActiveSound()));
         startActivityForResult(intent,0); // on attend en résultat l'état du jeu (en cours ou terminé)
@@ -53,7 +52,7 @@ public class menu extends Activity {
     //permet de reprendre une partie sauvegardé
     public void Continue(View view) {
         if (userData.getGameSaved()) {
-            Intent intent = new Intent(this, p8_Sokoban.class);
+            Intent intent = new Intent(this, Coloris.class);
             intent.putExtra("mode", "1");
             intent.putExtra("sound",Boolean.toString(userData.getActiveSound()));
             startActivityForResult(intent,0);
@@ -66,9 +65,10 @@ public class menu extends Activity {
 
     // Affiche les 3 meilleurs scores
     public void Best_score(View view) {
-        String Pseudo1 = "NONE", bestScore1 = "0.0";
-        String Pseudo2 = "NONE", bestScore2 = "0.0";
-        String Pseudo3 = "NONE", bestScore3 = "0.0";
+
+        String Pseudo1 = userData.getNameHighScoreAtIndex(0), bestScore1 = Integer.toString(userData.getHighScoreAtIndex(0));
+        String Pseudo2 = userData.getNameHighScoreAtIndex(1), bestScore2 = Integer.toString(userData.getHighScoreAtIndex(1));
+        String Pseudo3 = userData.getNameHighScoreAtIndex(2), bestScore3 = Integer.toString(userData.getHighScoreAtIndex(2));
 
 
         setContentView(R.layout.best_score);
@@ -109,12 +109,12 @@ public class menu extends Activity {
 
     }
 
-    // onclick pour quitter le menu
+    // onclick pour quitter le Menu
     public void Exit_game(View view) {
         finish();
     }
 
-    // le button back permet de quitter le menu ou revenir en arriere a partir du state 1 ou 2
+    // le button back permet de quitter le Menu ou revenir en arriere a partir du state 1 ou 2
     @Override
     public void onBackPressed() {
         if (state == 0)
