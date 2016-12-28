@@ -462,11 +462,15 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
     
     public void surfaceDestroyed(SurfaceHolder arg0) {
+        Log.i("debug","surface destroyed, gameSaved: "+Boolean.toString(userData.getGameSaved()));
         if(userData.getGameSaved()){
             userData.setTimer(time);
             userData.setScore(score);
             userData.setTripletTab(tripletTab);
             userData.setGameGrid(carte);
+            userData.setOrientationTab(orientation);
+            userData.writeUserData();
+            Log.i("debug","userData up to date time: "+userData.getTimer());
         }
         Log.i("-> FCT <-", "surfaceDestroyed");
     }    
@@ -504,6 +508,12 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
             }
         }
 
+    }
+
+    public void setOrientation(int[] tabOrientation){
+        for(int i=0;i<tabOrientation.length;i++){
+            this.orientation[i]=tabOrientation[i];
+        }
     }
 
     public void setCarte(int[][]carte){
@@ -767,7 +777,7 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
                     for (int j = 0; j < 3; j++)
                         tripletTab[lastindex][j] = (int) (Math.random() * (6 - 1 + 1)) + 1;
-
+                    orientation[lastindex]=0;
                 }
                 return true;
             }
@@ -784,7 +794,7 @@ public class SokobanView extends SurfaceView implements SurfaceHolder.Callback, 
 
                     for (int j = 0; j < 3; j++)
                         tripletTab[lastindex][j] = (int) (Math.random() * (6 - 1 + 1)) + 1;
-
+                        orientation[lastindex]=0;
                 }
 
                 return true;

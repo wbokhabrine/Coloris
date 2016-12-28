@@ -30,6 +30,7 @@ public class UserData {
     private int score;
     private int[][] gameGrid=new int[8][8]; // grille du jeu (tableau 8x8 de int)
     private int[][] tripletTab=new int [3][3]; // tableau de 3 triplets (1 triplet c'est une pièce de 3 cases)
+    private int[] orientationTab = new int[3]; // orientation des 3 tableaux de triplets, 4 etats de 0 à 3 inclu
     private Context context;
 
     //constructeur initialise les données utilisateurs
@@ -58,6 +59,10 @@ public class UserData {
                     tripletTab[i][y] = 0;
                 }
             }
+
+            for(int i=0;i<orientationTab.length;i++){
+                orientationTab[i]=0;
+            }
         }
     }
 
@@ -81,6 +86,17 @@ public class UserData {
         return  tripletTab;
     }
 
+    public void setOrientationTab(int orientationTab[]){
+        for(int i=0;i<orientationTab.length;i++){
+            this.orientationTab[i]=orientationTab[i];
+        }
+    }
+
+    public int[] getOrientationTab(){
+        return  orientationTab;
+    }
+
+
     public void setGameGrid(int gameGrid[][]){
         for(int i=0;i<gameGrid.length;i++){
             for(int y=0;y<gameGrid[i].length;y++){
@@ -88,6 +104,8 @@ public class UserData {
             }
         }
     }
+
+
 
     public int[][] getGameGrid(){
         return  gameGrid;
@@ -349,6 +367,20 @@ public class UserData {
             if( (line = inputReader.readLine()) != null){
                 score=Integer.parseInt(line);
             }
+
+            if( (line = inputReader.readLine()) != null) {
+                int x = 0;
+                int y = 0;
+                int i = 0;
+                y = line.indexOf(',', x);
+                while (y != -1 && i <orientationTab.length) {
+                    orientationTab[i]= Integer.parseInt(line.substring(x, y));
+                    x = y + 1;
+                    y = line.indexOf(',', x);
+                    i++;
+                }
+            }
+
             for(int index=0;index<tripletTab.length;index++){
                 if( (line = inputReader.readLine()) != null) {
                     int x = 0;
@@ -414,6 +446,10 @@ public class UserData {
             outputWriter = new BufferedWriter(new OutputStreamWriter(context.openFileOutput("gameData.txt",Context.MODE_PRIVATE)));
             outputWriter.write(Integer.toString(timer)+endOfLine);
             outputWriter.write(Integer.toString(score)+endOfLine);
+            for (int i = 0; i < orientationTab.length; i++) {
+                outputWriter.write(Integer.toString(orientationTab[i]) + ",");
+            }
+            outputWriter.write(endOfLine);
             for(int index=0;index<tripletTab.length;index++) {
                 for (int i = 0; i < tripletTab[index].length; i++) {
                     outputWriter.write(Integer.toString(tripletTab[index][i]) + ",");

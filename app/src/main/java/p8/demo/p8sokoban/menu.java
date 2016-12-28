@@ -48,7 +48,6 @@ public class menu extends Activity {
         intent.putExtra("mode", "0");
         intent.putExtra("sound",Boolean.toString(userData.getActiveSound()));
         startActivityForResult(intent,0); // on attend en résultat l'état du jeu (en cours ou terminé)
-
     }
 
     //permet de reprendre une partie sauvegardé
@@ -126,6 +125,12 @@ public class menu extends Activity {
         }
 
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        userData.readUserData();
     }
 
     @Override

@@ -20,7 +20,7 @@ public class p8_Sokoban extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         // initialise notre activity avec le constructeur parent
         super.onCreate(savedInstanceState);
-
+        Log.i("debug","P8soko oncreate");
         userData=new UserData(this);
         userData.readUserData();
         Intent intent = getIntent();
@@ -29,9 +29,10 @@ public class p8_Sokoban extends Activity {
         userData.setGameSaved(true);
         setContentView(R.layout.main);
         mSokobanView = (SokobanView) findViewById(R.id.SokobanView);
-
+        Log.i("debug","intent: "+mode);
         if(Integer.parseInt(mode)==0){
             //on lance une nouvelle partie
+            Log.i("debug","new game");
             mSokobanView.setReload(true);
         }else if (Integer.parseInt(mode)==1){
             Log.i("debug","load partie, time: "+userData.getTimer());
@@ -39,6 +40,7 @@ public class p8_Sokoban extends Activity {
             mSokobanView.setReload(false);
             mSokobanView.setCarte(userData.getGameGrid());
             mSokobanView.setTriplet(userData.getTripletTab());
+            mSokobanView.setOrientation(userData.getOrientationTab());
             mSokobanView.setScore(userData.getScore());
             mSokobanView.setTime(userData.getTimer());
         }
@@ -54,6 +56,12 @@ public class p8_Sokoban extends Activity {
         returnIntent.putExtra("gameSaved", Boolean.toString(userData.getGameSaved()));
         setResult(1, returnIntent);
         super.onBackPressed();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        userData.readUserData();
     }
 
     @Override
