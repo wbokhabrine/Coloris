@@ -1,5 +1,6 @@
 package p8.demo.p8sokoban;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -17,12 +18,11 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.Timer;
 
 public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
-    /*//Level en cours
-    private int IdLevel=1;*/
 
     private UserData userData;
 
@@ -34,15 +34,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
     private Bitmap 		 block_rose;
     private Bitmap 		 block_rouge;
     private Bitmap 		 block_vert;
-   /* private Bitmap 		diamant;
-    private Bitmap 		perso;
-    private Bitmap 		vide;*/
-    /*private Bitmap[] 	zone = new Bitmap[4];
-    private Bitmap 		up;
-    private Bitmap 		down;
-    private Bitmap 		left;
-    private Bitmap 		right;*/
-    private Bitmap 		win,fullGrid,endTime;
+    private Bitmap 		fullGrid,endTime;
 
 
 
@@ -52,7 +44,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
 
     //boolean savoir si on doit creer une partie
     private Boolean reload=true;
-    //socre et temps
+    //score et temps
     private int score=0;
     private Integer time; // compte à rebours en secondes
     long t1 = 0;
@@ -92,7 +84,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
 
     // tableau de reference du terrain
     int [][] ref    = {
-        {CST_block_blanc, CST_block_bleu, CST_block_jaune,CST_block_rose, CST_block_rouge, CST_block_vert, CST_block_vide, CST_block_vide},
+        {CST_block_vide, CST_block_vide, CST_block_vide,CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide},
         {CST_block_vide, CST_block_vide, CST_block_vide,CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide},
         {CST_block_vide, CST_block_vide, CST_block_vide,CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide},
         {CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide},
@@ -101,43 +93,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
         {CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide},
         {CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide, CST_block_vide}
     };
-
-   /* //le nombre de diamnts utiliser dans le niveau actuel//
-    int nbDiamond=4;
-
-    // position de reference du joueur niveau 1
-    int refxPlayer = 4;
-    int refyPlayer = 1;
-
-    // position de reference des diamants niveau 1
-    int [][] refdiamants   = {
-            {2, 3},
-            {2, 6},
-            {6, 3},
-            {6, 6},
-    };
-
-    // position courante des diamants
-    int [][] diamants   = {
-            {2, 3},
-            {2, 6},
-            {6, 3},
-            {6, 6},
-            {2, 6},
-            {6, 3},
-            {6, 6}
-
-        };
-*/
-
-   /* // position courante du joueur
-        int xPlayer = 4;
-        int yPlayer = 1;
-        
-        // compteur et max pour animer les zones d'arriv�e des diamants
-        int currentStepZone = 0;
-        int maxStepZone     = 4;
-    */
 
         // thread utiliser pour animer les zones de depot des diamants
         public     boolean in      = true;
@@ -155,7 +110,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
      */
     public ColorisView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        
 
         // permet d'ecouter les surfaceChanged, surfaceCreated, surfaceDestroyed        
     	holder = getHolder();
@@ -171,25 +125,11 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
         block_rose 		= BitmapFactory.decodeResource(mRes, R.drawable.block_rose);
         block_rouge 		= BitmapFactory.decodeResource(mRes, R.drawable.block_rouge);
         block_vert 		= BitmapFactory.decodeResource(mRes, R.drawable.block_vert);
-       /* diamant		= BitmapFactory.decodeResource(mRes, R.drawable.diamant);
-    	perso		= BitmapFactory.decodeResource(mRes, R.drawable.perso);
-        zone[0] 	= BitmapFactory.decodeResource(mRes, R.drawable.zone_01);
-        zone[1] 	= BitmapFactory.decodeResource(mRes, R.drawable.zone_02);
-        zone[2] 	= BitmapFactory.decodeResource(mRes, R.drawable.zone_03);
-        zone[3] 	= BitmapFactory.decodeResource(mRes, R.drawable.zone_04);
-    	vide 		= BitmapFactory.decodeResource(mRes, R.drawable.vide);
-    	up 			= BitmapFactory.decodeResource(mRes, R.drawable.up);
-    	down 		= BitmapFactory.decodeResource(mRes, R.drawable.down);
-    	left 		= BitmapFactory.decodeResource(mRes, R.drawable.left);
-    	right 		= BitmapFactory.decodeResource(mRes, R.drawable.right);*/
-    	win 		= BitmapFactory.decodeResource(mRes, R.drawable.win);
         endTime 		= BitmapFactory.decodeResource(mRes, R.drawable.endtime);
         fullGrid 		= BitmapFactory.decodeResource(mRes, R.drawable.fullgrid);
+
     	// initialisation des parmametres du jeu
     	initparameters();
-
-    	// creation du thread
-        cv_thread   = new Thread(this);
 
         // prise de focus pour gestion des touches
         setFocusable(true);
@@ -238,37 +178,26 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
         carteTopAnchor  = carteTileSize;
         carteLeftAnchor = (getWidth()- carteWidth*carteTileSize)/2;
 
-     /*   xPlayer = refxPlayer;
-        yPlayer = refyPlayer;
-        nbDiamond=4;*/
-
         loadlevel();
 
-        if ((cv_thread!=null) && (!cv_thread.isAlive())) {        	
+        // creation du thread
+        cv_thread   = new Thread(this);
+        if ((cv_thread!=null) && (!cv_thread.isAlive())) {
         	cv_thread.start();
         	Log.e("-FCT-", "cv_thread.start()");
         }
-    }    
-
-    // dessin des fleches
-   /* private void paintarrow(Canvas canvas) {
-    	canvas.drawBitmap(up, (getWidth()-up.getWidth())/2, 0, null);
-    	canvas.drawBitmap(down, (getWidth()-down.getWidth())/2, getHeight()-down.getHeight(), null);
-    	canvas.drawBitmap(left, 0, (getHeight()-up.getHeight())/2, null);
-    	canvas.drawBitmap(right, getWidth()-right.getWidth(), (getHeight()-up.getHeight())/2, null);    	
-    }*/
-
-    // dessin du gagne si gagne
-    private void paintwin(Canvas canvas) {
-    	canvas.drawBitmap(win, carteLeftAnchor+ 3*carteTileSize, carteTopAnchor+ 4*carteTileSize, null);
     }
 
     private void paintEndTime(Canvas canvas) {
-        canvas.drawBitmap(endTime, carteLeftAnchor+ 3*carteTileSize, carteTopAnchor+ 4*carteTileSize, null);
+        int pixelx=240;
+        int pixely=135;
+        canvas.drawBitmap(endTime, (getWidth()- pixelx)/2, carteTopAnchor, null);
     }
 
     private void paintFullGrid(Canvas canvas) {
-        canvas.drawBitmap(fullGrid, carteLeftAnchor+ 3*carteTileSize, carteTopAnchor+ 4*carteTileSize, null);
+        int pixelx=240;
+        int pixely=135;
+        canvas.drawBitmap(fullGrid, (getWidth()- pixelx)/2, carteTopAnchor, null);
     }
     
     // dessin de la carte du jeu
@@ -297,12 +226,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                     case CST_block_vert:
                         canvas.drawBitmap(block_vert, carteLeftAnchor+ j*carteTileSize, carteTopAnchor+ i*carteTileSize, null);
                         break;
-                  /*  case CST_zone:
-                    	canvas.drawBitmap(zone[currentStepZone],carteLeftAnchor+ j*carteTileSize, carteTopAnchor+ i*carteTileSize, null);
-                        break;*/
-                  /*  case CST_vide:
-                    	canvas.drawBitmap(vide,carteLeftAnchor+ j*carteTileSize, carteTopAnchor+ i*carteTileSize, null);
-                        break;*/
                 }
             }
         }
@@ -349,39 +272,31 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                 else{
                     switch (tripletTab[i][j]) {
                         case CST_block_blanc:
-                            canvas.drawBitmap(block_blanc, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                            canvas.drawBitmap(block_blanc, i * halfCarteLeftAnchor + carteTileSize + i * 3 * carteTileSize + ontouchtab[i][0],
                                     carteTopAnchor*2 + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
                             break;
                         case CST_block_bleu:
-                            canvas.drawBitmap(block_bleu, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                            canvas.drawBitmap(block_bleu, i * halfCarteLeftAnchor + carteTileSize + i * 3 * carteTileSize + ontouchtab[i][0],
                                     carteTopAnchor*2 + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
                             break;
                         case CST_block_jaune:
-                            canvas.drawBitmap(block_jaune, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                            canvas.drawBitmap(block_jaune, i * halfCarteLeftAnchor + carteTileSize  + i * 3 * carteTileSize + ontouchtab[i][0],
                                     carteTopAnchor*2 + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
                             break;
                         case CST_block_rose:
-                            canvas.drawBitmap(block_rose, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                            canvas.drawBitmap(block_rose, i * halfCarteLeftAnchor + carteTileSize  + i * 3 * carteTileSize + ontouchtab[i][0],
                                     carteTopAnchor*2 + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
                             break;
                         case CST_block_rouge:
-                            canvas.drawBitmap(block_rouge, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                            canvas.drawBitmap(block_rouge, i * halfCarteLeftAnchor + carteTileSize  + i * 3 * carteTileSize + ontouchtab[i][0],
                                     carteTopAnchor*2 + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
                             break;
                         case CST_block_vert:
-                            canvas.drawBitmap(block_vert, i * halfCarteLeftAnchor + carteTileSize /* + j * carteTileSize*/ + i * 3 * carteTileSize + ontouchtab[i][0],
+                            canvas.drawBitmap(block_vert, i * halfCarteLeftAnchor + carteTileSize  + i * 3 * carteTileSize + ontouchtab[i][0],
                                     carteTopAnchor*2 + carteWidth * carteTileSize + j * carteTileSize + ontouchtab[i][1], null);
                             break;
-                  /*  case CST_zone:
-                    	canvas.drawBitmap(zone[currentStepZone],carteLeftAnchor+j*carteTileSize+ half, carteTopAnchor+ carteHeight*carteTileSize+3, null);
-                        break;*/
-                  /*  case CST_vide:
-                    	canvas.drawBitmap(vide,carteLeftAnchor+j*carteTileSize+ half, carteTopAnchor+ carteHeight*carteTileSize+3, null);
-                        break;*/
                     }
-
                 }
-
             }
         }
     }
@@ -427,31 +342,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
         canvas.drawText(strHighScore,scoreBounds.width()+espacement,canvas.getHeight()-maxHeigh,paint);
         canvas.drawText(strTime,scoreBounds.width()+espacement+highScoreBounds.width()+espacement,canvas.getHeight()-maxHeigh,paint);
     }
-    
-  /*  // dessin du curseur du joueur
-    private void paintPlayer(Canvas canvas) {
-    	canvas.drawBitmap(perso,carteLeftAnchor+ xPlayer*carteTileSize, carteTopAnchor+ yPlayer*carteTileSize, null);
-    }*/
 
- /*   // dessin des diamants
-    private void paintdiamants(Canvas canvas) {
-        for (int i=0; i < nbDiamond; i++) {
-        	canvas.drawBitmap(diamant,carteLeftAnchor+ diamants[i][1]*carteTileSize, carteTopAnchor+ diamants[i][0]*carteTileSize, null);
-        }
-    }*/
-
-    // permet d'identifier si la partie est gagnee (tous les diamants � leur place)
-    private boolean isWon() {
-      /*  for (int i=0; i < nbDiamond; i++) {
-            if (!IsCell(diamants[i][1], diamants[i][0], CST_zone)) {
-                return false;
-            }
-        }
-         return true;
-         */
-        return false;
-
-    }
     
     // dessin du jeu (fond uni, en fonction du jeu gagne ou pas dessin du plateau et du joueur des diamants et des fleches)
     private void nDraw(Canvas canvas) {
@@ -461,26 +352,15 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
             paintTripletTab(canvas);
             paintInfoBar(canvas);
             paintEndTime(canvas);
-            if(userData.getGameSaved()) {
-                userData.newHighScore(score, "NONE");
-                userData.setGameSaved(false);
-            }
         }else if(isFullGrid()){
             paintcarte(canvas);
             paintTripletTab(canvas);
             paintInfoBar(canvas);
             paintFullGrid(canvas);
-            if(userData.getGameSaved()) {
-                userData.newHighScore(score, "NONE");
-                userData.setGameSaved(false);
-            }
         } else {
             paintcarte(canvas);
             paintTripletTab(canvas);
             paintInfoBar(canvas);
-            /*paintPlayer(canvas);*/
-          /*  paintdiamants(canvas);*/
-        /*    paintarrow(canvas); */
         }    	   	
         
     }
@@ -498,6 +378,8 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
     
     public void surfaceDestroyed(SurfaceHolder arg0) {
         Log.i("debug","surface destroyed, gameSaved: "+Boolean.toString(userData.getGameSaved()));
+        in=false;
+
         if(userData.getGameSaved()){
             userData.setTimer(time);
             userData.setScore(score);
@@ -517,10 +399,8 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
     public void run() {
     	Canvas c = null;
         while (in) {
-            if (cv_thread.isAlive()) {
                 try {
                     cv_thread.sleep(40);
-                    /*currentStepZone = (currentStepZone + 1) % maxStepZone;*/
                     try {
                         if(!pause) {
                             t2 = System.currentTimeMillis();
@@ -542,7 +422,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                 } catch (Exception e) {
                     Log.e("-> RUN <-", "PB DANS RUN");
                 }
-            }
         }
 
     }
@@ -569,102 +448,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
         }
     }
     
-  /*  // verification que nous sommes dans le tableau
-    private boolean IsOut(int x, int y) {
-        if ((x < 0) || (x > carteWidth- 1)) {
-            return true;
-        }
-        if ((y < 0) || (y > carteHeight- 1)) {
-            return true;
-        }
-        return false;
-    }*/
-
-  /*  //controle de la valeur d'une cellule
-    private boolean IsCell(int x, int y, int mask) {
-        if (carte[y][x] == mask) {
-            return true;
-        }
-        return false;
-    }*/
-
-   /* // controle si nous avons un diamant dans la case
-    private boolean IsDiamant(int x, int y) {
-        for (int i=0; i< nbDiamond; i++) {
-            Log.i("POs"," val1: " + diamants[i][1] + " val 2: " + diamants[i][1] );
-            if ((diamants[i][1] == x) && (diamants[i][0] == y)) {
-                return true;
-            }
-        }
-        return false;
-    }*/
-
-   /* // met � jour la position d'un diamant
-    private void UpdateDiamant(int x, int y, int new_x, int new_y) {
-        for (int i=0; i< nbDiamond; i++) {
-            if ((diamants[i][1] == x) && (diamants[i][0] == y)) {
-                diamants[i][1] = new_x;
-                diamants[i][0] = new_y;
-            }
-        }
-    }    */
-
-    // fonction permettant de recuperer les retours clavier
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-    	Log.i("-> FCT <-", "onKeyUp: "+ keyCode);
-
-
-    	
-       /* int xTmpPlayer	= xPlayer;
-        int yTmpPlayer  = yPlayer;
-        int xchange 	= 0;
-        int ychange 	= 0;
-
-
-
-        if (keyCode == KeyEvent.KEYCODE_0) {
-        	initparameters();
-        }
-    	
-        if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-        	ychange = -1;
-        }
-
-        if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-        	ychange = 1;
-        }
-
-        if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-            xchange = -1;
-        }
-
-        if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-            xchange = 1;        
-        }
-	        xPlayer = xPlayer+ xchange;
-	        yPlayer = yPlayer+ ychange;
-
-
-        if (IsOut(xPlayer, yPlayer) || IsCell(xPlayer, yPlayer, CST_block_vide)) {
-	            xPlayer = xTmpPlayer;
-	            yPlayer = yTmpPlayer;
-	        } else if (IsDiamant(xPlayer, yPlayer)) {
-            int xTmpDiamant = xPlayer;
-	            int yTmpDiamant = yPlayer;
-	            xTmpDiamant = xTmpDiamant+ xchange;
-	            yTmpDiamant = yTmpDiamant+ ychange;
-	            if (IsOut(xTmpDiamant, yTmpDiamant) || IsCell(xTmpDiamant, yTmpDiamant, CST_block_vide) || IsDiamant(xTmpDiamant, yTmpDiamant)) {
-	                xPlayer = xTmpPlayer;
-	                yPlayer = yTmpPlayer;
-	            } else {
-
-                    UpdateDiamant(xTmpDiamant- xchange, yTmpDiamant- ychange, xTmpDiamant, yTmpDiamant);
-	            }
-	        }      */
-	    return true;   
-    }
 
 // retourne 0, 1 ou 2 qui correspond à l'indice du tripletTab touché
  int hitTripletTab( MotionEvent event){
@@ -693,12 +476,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
          resx=(int)((x-margex)/tx);
          resy=(int)((y-margey)/ty);
 
-        /* if(resx==0 && resy==0)
-             Log.i("-> FCT <-", "tab Case (0,"+i+") touchée "+y);
-         if(resx==1 && resy==0)
-             Log.i("-> FCT <-", "tab Case (1,"+i+")  touchée  "+y);
-         if(resx==2 && resy==0)
-             Log.i("-> FCT <-", "tab Case (2,"+i+") touchée "+y);*/
 
          if((orientation[i]&0x01)==1) {
              if (resx == 0 && resy == 0 || resx == 0 && resy == 1 || resx == 0 && resy == 2) {
@@ -770,7 +547,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                     else break;
                 }
                 int totaly=compteury1+compteury2+1; // le +1 c'est pour celui qui est en centre (carte[i][j])
-                Log.i("compteur","x="+j+" y="+i+ "compteur y1="+compteury1+" compteury2="+compteury2+" totaly="+totaly);
+               // Log.i("compteur","x="+j+" y="+i+ "compteur y1="+compteury1+" compteury2="+compteury2+" totaly="+totaly);
                 if(totaly >= 3){
                     flag[i][j]=true;
                     for(int y=1 ; y < compteury1; y++)
@@ -852,18 +629,42 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
         tripletTab[indice][2]=tmp;
     }
 
+
+    //permet de scroll les tableaux
     static int lastindex=-1;
     static int index=-1;
-    //permet de scroll les tableaux
     private OnTouchListener _otc = new OnTouchListener(){
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             Log.i("Info","Ontouch");
+
+
             if(event.getAction()==MotionEvent.ACTION_DOWN){
+
                 index= hitTripletTab(event);
                 lastindex=index;
             }
             if(event.getAction()== MotionEvent.ACTION_UP){
+
+                //La partie est fini on affiche le layout imput score
+                if(time<=0 || isFullGrid() ) {
+                    in=false;
+                    setVisibility(INVISIBLE);
+                    ((Activity) mContext).setContentView(R.layout.input_score);
+                    TextView text = (TextView)  ((Activity) mContext).findViewById(R.id.textView5);
+                    String record;
+                    if(score > userData.getTabHighScore()[0]){
+                        record="Nouveau Record !";
+                    }
+                    else{
+                        record="Fin de partie !";
+                    }
+                    String t=record+"\n\nScore: "+score;
+                    text.setText(t);
+                    return true;
+                }
+
+
                 //remise à jour du scroll
                 ontouchtab[0][0] = 0;
                 ontouchtab[0][1] = 0;
@@ -897,7 +698,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                 index = -1;
             }
 
-
+            if(time>0 &&!isFullGrid())
             if(index != -1) {
                 if((orientation[index]&0x01) == 1) {
                     ontouchtab[index][0] = event.getX() - carteTileSize - carteTileSize / 2 - (index * carteLeftAnchor / 2 + index * 3 * carteTileSize);
@@ -913,12 +714,11 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
         }
     };
 
+
+
+
     public void setUserData(UserData userData){
         this.userData=userData;
-    }
-
-    public void setLvl(int id){
-
     }
 
     public void setScore(int score){
@@ -932,6 +732,9 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
     public void setReload(Boolean reload){
         this.reload=reload;
     }
+
+    public int getScore(){ return score; }
+
 
     public boolean isFullGrid(){ // vérifie si il reste 3 cellule adjacente disponible
         //on regarde toutes les verticales
@@ -954,8 +757,16 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
 
         return true;
     }
+    public void exit(){
+        userData.setGameSaved(false);
+        ((Activity) mContext).finish();
+    }
 
     public void setPause(Boolean pause){
         this.pause=pause;
+        in=!pause;  // met fin au thread
+
+
+
     }
 }

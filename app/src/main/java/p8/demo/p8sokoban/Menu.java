@@ -71,6 +71,10 @@ public class Menu extends Activity {
         String Pseudo3 = userData.getNameHighScoreAtIndex(2), bestScore3 = Integer.toString(userData.getHighScoreAtIndex(2));
 
 
+        if(Pseudo1.equals(""))Pseudo1="None";
+        if(Pseudo2.equals(""))Pseudo2="None";
+        if(Pseudo3.equals(""))Pseudo3="None";
+
         setContentView(R.layout.best_score);
         // l'etat 1 permet de savoir que on est dans le layout best_score
         state = 1;

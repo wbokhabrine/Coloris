@@ -10,6 +10,7 @@
     <string name="SongOn">Activer le son</string>
     <string name="SongOff">Désactiver le son</string>
     <string name="ExitGame">Quitter le jeu</string>
+    <string name="Entername">Veuillez entrer votre nom:</string>
 
 
 </resources>

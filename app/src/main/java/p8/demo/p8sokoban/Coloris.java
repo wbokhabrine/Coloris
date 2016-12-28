@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 // declaration de notre activity h�rit�e de Activity
 
@@ -49,6 +51,23 @@ public class Coloris extends Activity {
         mColorisView.setVisibility(View.VISIBLE);
     }
 
+
+    //Button Ok pressé
+    public void saveUserOk(View view) {
+        int score= mColorisView.getScore();
+        String name;
+        EditText edttext=(EditText) findViewById(R.id.editText2) ;
+        name=edttext.getText().toString();
+
+        if(name.equals("")) name="None";
+
+        userData.newHighScore(score, name);
+        userData.setGameSaved(false);
+        Toast.makeText(this, "Score sauvegardé",
+                Toast.LENGTH_LONG).show();
+        mColorisView.exit();
+    }
+
     @Override
     public void onBackPressed(){
         // System.out.println("teeeest");
@@ -85,6 +104,8 @@ public class Coloris extends Activity {
         mColorisView.setPause(true);
         super.onPause();
     }
+
+
 
     @Override
     public void onStop(){
