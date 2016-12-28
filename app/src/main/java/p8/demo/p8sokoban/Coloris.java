@@ -26,13 +26,14 @@ public class Coloris extends Activity {
         Intent intent = getIntent();
         String mode = intent.getStringExtra("mode"); // 0 = new, 1 = continue last game
         userData.setActiveSound(Boolean.parseBoolean(intent.getStringExtra("sound")));
-        userData.setGameSaved(true);
         setContentView(R.layout.main);
         mColorisView = (ColorisView) findViewById(R.id.SokobanView);
         Log.i("debug","intent: "+mode);
         if(Integer.parseInt(mode)==0){
             //on lance une nouvelle partie
             Log.i("debug","new game");
+            userData.setGameSaved(false);
+            userData.writeUserData();
             mColorisView.setReload(true);
         }else if (Integer.parseInt(mode)==1){
             Log.i("debug","load partie, time: "+userData.getTimer());
@@ -62,6 +63,14 @@ public class Coloris extends Activity {
     public void onResume(){
         super.onResume();
         userData.readUserData();
+        if(userData.getGameSaved() ){
+            mColorisView.setReload(false);
+            mColorisView.setCarte(userData.getGameGrid());
+            mColorisView.setTriplet(userData.getTripletTab());
+            mColorisView.setOrientation(userData.getOrientationTab());
+            mColorisView.setScore(userData.getScore());
+            mColorisView.setTime(userData.getTimer());
+        }
         mColorisView.setPause(false);
     }
 
