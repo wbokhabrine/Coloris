@@ -43,8 +43,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
     private Bitmap 		 block_vert;
     private Bitmap 		fullGrid,endTime;
 
-
-
 	// Declaration des objets Ressources et Context permettant d'acc�der aux ressources de notre application et de les charger
     private Resources 	mRes;
     private Context 	mContext;
@@ -169,7 +167,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
     }
 
 
-
     // initialisation du jeu
     public void initparameters() {
         paint = new Paint();
@@ -242,7 +239,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
             }
         }
     }
-
 
     private void paintTripletTab(Canvas canvas) {
         int halfCarteLeftAnchor = carteLeftAnchor/2;
@@ -354,7 +350,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
         canvas.drawText(strHighScore,scoreBounds.width()+espacement,canvas.getHeight()-maxHeigh,paint);
         canvas.drawText(strTime,scoreBounds.width()+espacement+highScoreBounds.width()+espacement,canvas.getHeight()-maxHeigh,paint);
     }
-
     
     // dessin du jeu (fond uni, en fonction du jeu gagne ou pas dessin du plateau et du joueur des diamants et des fleches)
     private void nDraw(Canvas canvas) {
@@ -386,7 +381,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
     public void surfaceCreated(SurfaceHolder arg0) {
     	Log.i("-> FCT <-", "surfaceCreated");    	        
     }
-
     
     public void surfaceDestroyed(SurfaceHolder arg0) {
         Log.i("debug","surface destroyed, gameSaved: "+Boolean.toString(userData.getGameSaved()));
@@ -506,6 +500,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
 
     return -1;
  }
+
     // supprime les blocs de couleurs si il y'a alignement + incrementation du score
     public void colorAlignment(int resx,int resy, boolean orientation){
         int compteurx1,compteurx2;
@@ -522,6 +517,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                 color=carte[i][j];
                 if(color == CST_block_vide) continue;
 
+                //Verification alignement axe X
                 compteurx1=0;
                 for(int x=j+1; x < carteWidth; x++){
                     if (carte[i][x] == color)
@@ -545,7 +541,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                 }
 
 
-
+                //Verification alignement axe Y
                 compteury1=0;
                 for(int y=i+1; y < carteHeight; y++){
                     if(carte[y][j] == color)
@@ -558,6 +554,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                         compteury2 += 1;
                     else break;
                 }
+
                 int totaly=compteury1+compteury2+1; // le +1 c'est pour celui qui est en centre (carte[i][j])
                // Log.i("compteur","x="+j+" y="+i+ "compteur y1="+compteury1+" compteury2="+compteury2+" totaly="+totaly);
                 if(totaly >= 3){
@@ -576,6 +573,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                     carte[i][j] = CST_block_vide;
                     score+=1;
                 }
+        //Lance un son si il y'a eu un alignement
         if(tmp == true)
             playSong(songAlignement);
     }
@@ -628,10 +626,8 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
 
                     playSong(songPose);
                 }
-
                 return true;
             }
-
         return false;
     }
     // fonction permettant de recuperer les evenements tactiles
@@ -648,7 +644,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
         tripletTab[indice][2]=tmp;
     }
 
-
     //permet de scroll les tableaux
     static int lastindex=-1;
     static int index=-1;
@@ -663,8 +658,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                 lastindex=index;
             }
             if(event.getAction()== MotionEvent.ACTION_UP){
-
-
 
                 //La partie est fini on affiche le layout imput score
                 if(time<=0 || isFullGrid() ) {
@@ -684,7 +677,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                     return true;
                 }
 
-
                 //remise à jour du scroll
                 ontouchtab[0][0] = 0;
                 ontouchtab[0][1] = 0;
@@ -696,7 +688,7 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                if( hitcarte(event)==true){
 
                }
-                else {
+               else {
                    if(lastindex!=-1) {
                        playSong(songFlip);
                        orientation[lastindex] = (orientation[lastindex] + 1) % 4; //permet de boucler de 0 a 3
@@ -730,7 +722,6 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
                     ontouchtab[index][1] = event.getY() + carteTileSize/2 - carteTileSize * 2 - (carteTopAnchor*2 + carteWidth * carteTileSize + carteTileSize);
                 }
             }
-
                 return true;
         }
     };
@@ -790,8 +781,5 @@ public class ColorisView extends SurfaceView implements SurfaceHolder.Callback, 
     public void setPause(Boolean pause){
         this.pause=pause;
         in=!pause;  // met fin au thread
-
-
-
     }
 }
