@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="52fb71c9e69ef8b2d93a9b1aaf991482ca6a28e3">
-        <dex dex="/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_c168072eada8d70b067b577f955a3b6cf662fcc2/classes.dex" />
+        sha1="a1c1c2da0ee40887ddc1adcbbd2fcc59cd821ab0">
+        <dex dex="/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_001bb8481d259540679b85a213ddbaee769328e8/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="1ad8b932b3335965802ce55f0512bb84b9cc5a92">
-        <dex dex="/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_329b72a3dc9b4d3f1f4bc24ccc267f02a8221999/classes.dex" />
+        sha1="b78b88cdecb172913113575549fd74bd31cca75d">
+        <dex dex="/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_7dd475120495fbef0b6ed8b357aa363bcbfa1eee/classes.dex" />
     </item>
 
 </items>

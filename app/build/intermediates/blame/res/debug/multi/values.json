@@ -1,105 +1,5 @@
 [
     {
-        "outputFile": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 44,
-                    "endOffset": 95
-                },
-                "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/src/main/res/values/strings.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 114,
-                        "endColumn": 44,
-                        "endOffset": 154
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 3,
-                    "startColumn": 4,
-                    "startOffset": 100,
-                    "endColumn": 58,
-                    "endOffset": 154
-                },
-                "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/src/main/res/values/strings.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 58,
-                        "endOffset": 109
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 4,
-                    "startColumn": 4,
-                    "startOffset": 159,
-                    "endColumn": 40,
-                    "endOffset": 195
-                },
-                "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/src/main/res/values/strings.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 159,
-                        "endColumn": 40,
-                        "endOffset": 195
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 5,
-                    "startColumn": 4,
-                    "startOffset": 200,
-                    "endColumn": 40,
-                    "endOffset": 236
-                },
-                "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/src/main/res/values/strings.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 4,
-                        "startOffset": 200,
-                        "endColumn": 40,
-                        "endOffset": 236
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 6,
-                    "startColumn": 4,
-                    "startOffset": 241,
-                    "endColumn": 40,
-                    "endOffset": 277
-                },
-                "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/P8_Sokoban1/app/src/main/res/values/strings.xml",
-                    "position": {
-                        "startLine": 6,
-                        "startColumn": 4,
-                        "startOffset": 241,
-                        "endColumn": 40,
-                        "endOffset": 277
-                    }
-                }
-            }
-        ]
-    },
-    {
         "outputFile": "/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
         "map": [
             {
@@ -111,7 +11,14 @@
                     "endOffset": 97
                 },
                 "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml"
+                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 213,
+                        "endColumn": 46,
+                        "endOffset": 255
+                    }
                 }
             },
             {
@@ -119,8 +26,27 @@
                     "startLine": 3,
                     "startColumn": 4,
                     "startOffset": 102,
+                    "endColumn": 64,
+                    "endOffset": 162
+                },
+                "from": {
+                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 522,
+                        "endColumn": 64,
+                        "endOffset": 582
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 167,
                     "endColumn": 51,
-                    "endOffset": 149
+                    "endOffset": 214
                 },
                 "from": {
                     "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml",
@@ -135,86 +61,135 @@
             },
             {
                 "to": {
-                    "startLine": 4,
-                    "startColumn": 4,
-                    "startOffset": 154,
-                    "endColumn": 53,
-                    "endOffset": 203
-                },
-                "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml"
-                }
-            },
-            {
-                "to": {
                     "startLine": 5,
                     "startColumn": 4,
-                    "startOffset": 208,
-                    "endColumn": 49,
-                    "endOffset": 253
+                    "startOffset": 219,
+                    "endColumn": 53,
+                    "endOffset": 268
                 },
                 "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml"
+                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 416,
+                        "endColumn": 53,
+                        "endOffset": 465
+                    }
                 }
             },
             {
                 "to": {
                     "startLine": 6,
                     "startColumn": 4,
-                    "startOffset": 258,
-                    "endColumn": 44,
-                    "endOffset": 298
+                    "startOffset": 273,
+                    "endColumn": 49,
+                    "endOffset": 318
                 },
                 "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml"
+                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 366,
+                        "endColumn": 49,
+                        "endOffset": 411
+                    }
                 }
             },
             {
                 "to": {
                     "startLine": 7,
                     "startColumn": 4,
-                    "startOffset": 303,
-                    "endColumn": 55,
-                    "endOffset": 354
+                    "startOffset": 323,
+                    "endColumn": 44,
+                    "endOffset": 363
                 },
                 "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml"
+                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 115,
+                        "endColumn": 44,
+                        "endOffset": 155
+                    }
                 }
             },
             {
                 "to": {
                     "startLine": 8,
                     "startColumn": 4,
-                    "startOffset": 359,
-                    "endColumn": 58,
-                    "endOffset": 413
+                    "startOffset": 368,
+                    "endColumn": 55,
+                    "endOffset": 419
                 },
                 "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml"
+                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 260,
+                        "endColumn": 55,
+                        "endOffset": 311
+                    }
                 }
             },
             {
                 "to": {
                     "startLine": 9,
                     "startColumn": 4,
-                    "startOffset": 418,
-                    "endColumn": 49,
-                    "endOffset": 463
+                    "startOffset": 424,
+                    "endColumn": 58,
+                    "endOffset": 478
                 },
                 "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml"
+                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 58,
+                        "endOffset": 109
+                    }
                 }
             },
             {
                 "to": {
                     "startLine": 10,
                     "startColumn": 4,
-                    "startOffset": 468,
-                    "endColumn": 52,
-                    "endOffset": 516
+                    "startOffset": 483,
+                    "endColumn": 49,
+                    "endOffset": 528
                 },
                 "from": {
-                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml"
+                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 316,
+                        "endColumn": 49,
+                        "endOffset": 361
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 533,
+                    "endColumn": 52,
+                    "endOffset": 581
+                },
+                "from": {
+                    "file": "/home/wissam/AndroidStudioProjects/Coloris/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 160,
+                        "endColumn": 52,
+                        "endOffset": 208
+                    }
                 }
             }
         ]

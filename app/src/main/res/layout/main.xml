@@ -4,8 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-	<p8.demo.p8sokoban.ColorisView
-		android:id="@+id/SokobanView"
+	<p8.demo.p8coloris.ColorisView
+		android:id="@+id/ColorisView"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent" />    
 

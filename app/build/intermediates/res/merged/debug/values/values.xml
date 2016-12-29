@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="Continue">Reprendre</string>
+    <string name="Entername">Veuillez entrer votre nom:</string>
     <string name="ExitGame">Quitter le jeu</string>
     <string name="SongOff">Désactiver le son</string>
     <string name="SongOn">Activer le son</string>

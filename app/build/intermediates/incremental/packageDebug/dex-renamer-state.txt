@@ -1,4 +1,4 @@
-#Tue Dec 27 02:13:15 CET 2016
+#Thu Dec 29 02:51:47 CET 2016
 base.0=/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main
 renamed.0=classes.dex
 file.0=/home/wissam/AndroidStudioProjects/Coloris/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex
